@@ -51,7 +51,7 @@ qa_deploy:
   before_script:
     - pip install awscli
   script:
-    - aws s3 cp ./qa arn:aws:s3:::ll-gitlab-jekyll-qa --recursive  --config _config.yml,_config-qa.yml
+    - aws s3 cp ./qa arn:aws:s3:::ll-gitlab-jekyll-qa --recursive
   artifacts:
     paths:
       - qa
