@@ -31,7 +31,7 @@ qa_build:
   tags:
   - docker
   stage: build
-  enviornment:
+  environment:
     name: qa
   script:
     - bundle exec jekyll build -d qa --strict_front_matter
@@ -46,7 +46,7 @@ qa_deploy:
   tags:
   - docker
   stage: deploy
-  enviornment:
+  environment:
     name: qa
   before_script:
     - pip install awscli
