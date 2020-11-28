@@ -23,7 +23,7 @@ qa_test:
   environment:
     name: qa
   script:
-    - bundle exec jekyll doctor --config _config.yml _config-qa.yml
+    - bundle exec jekyll doctor --config _config.yml,_config-qa.yml
   except:
     - release
 
@@ -34,7 +34,7 @@ qa_build:
   environment:
     name: qa
   script:
-    - bundle exec jekyll build -d qa --strict_front_matter  --config _config.yml _config-qa.yml
+    - bundle exec jekyll build -d qa --strict_front_matter  --config _config.yml,_config-qa.yml
   artifacts:
     paths:
       - qa
@@ -51,7 +51,7 @@ qa_deploy:
   before_script:
     - pip install awscli
   script:
-    - aws s3 cp ./qa arn:aws:s3:::ll-gitlab-jekyll-qa --recursive  --config _config.yml _config-qa.yml
+    - aws s3 cp ./qa arn:aws:s3:::ll-gitlab-jekyll-qa --recursive  --config _config.yml,_config-qa.yml
   artifacts:
     paths:
       - qa
