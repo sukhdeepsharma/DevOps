@@ -20,7 +20,7 @@ qa_test:
   tags:
   - docker
   stage: test
-  enviornment:
+  environment:
     name: qa
   script:
     - bundle exec jekyll doctor
