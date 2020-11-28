@@ -11,26 +11,49 @@ before_script:
   - gem install bundler
   - bundle install
 
-test:
+stages:
+  - test
+  - build
+  - deploy
+
+qa_test:
   tags:
   - docker
   stage: test
+  enviornment:
+    name: qa
   script:
-    - bundle exec jekyll build -d test --strict_front_matter
+    - bundle exec jekyll doctor
+  except:
+    - release
+
+qa_build:
+  tags:
+  - docker
+  stage: build
+  enviornment:
+    name: qa
+  script:
+    - bundle exec jekyll build -d qa --strict_front_matter
   artifacts:
     paths:
-      - test
+      - qa
   except:
-    - master
+    - release
 
-pages:
+qa_deploy:
+  image: python:latest
   tags:
   - docker
   stage: deploy
+  enviornment:
+    name: qa
+  before_script:
+    - pip install awscli
   script:
-    - bundle exec jekyll build -d public --strict_front_matter
+    - aws s3 cp ./qa arn:aws:s3:::ll-gitlab-jekyll-qa --recursive
   artifacts:
     paths:
-      - public
-  only:
-    - master
+      - qa
+  except:
+    - release
